@@ -1,8 +1,115 @@
----
-layout: default
-title: Gunda Abhishek
----
-<div class="blurb">
-	<h1>Hi there, I'm Abhishek!</h1>
-	<p> <a href="/about">Read more about my life...</a></p>
-</div><!-- /.blurb -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Economic Trends and Popular Music</title>
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<div id='cssmenu'>
+      <ul>
+        <li class='active'>
+          <a href='./index.html'>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href='./viz.html'>
+            <span>Visualization</span>
+          </a>
+        </li>
+        <li>
+          <a href='./video.html'>
+            <span>Video</span>
+          </a>
+        </li>
+        <li class='last'>
+          <a href='./ProcBook.html'>
+            <span>Process Book</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class='wrapper'>
+      <header>
+        <h1>Popular Music and Economic Trends</h1>
+        <p>Visualization of the Impact of Economics on Popular Music</p>
+
+        <p>Glen Barger and David Price<br>CS-171 Data Visualization, 2014</p>
+
+
+      </header>
+      <section>
+        <h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>About This Visualization</h3>
+
+<p>This visualization allows you to explore this question: <i>What impacts do economic trends have on the qualities of music that become popular?</i></p> 
+
+<p>For example, during a recession, does popular music become more, or less, energetic? Do song lyrics contain more, or fewer, references to things like money, paychecks, and work, or does the opposite occur – during recession, do people want to hear about distracting subjects that have nothing to do with the economy? What about words associated with religion, or colors, or the body – do those change in response to economic trends? Is there any correlation at all?</p>
+
+<h3>How to Use It</h3>
+
+<ul>
+<li>Pick a time period from the economy graph at the bottom.</li>
+<li>Look at the important political and economic events that happened in that period. </li>
+<li>Move the slider and watch the musical qualities change over time.</li>
+<li>Watch the song list change as you select different musical qualities. The list shows the top 10 songs for the period, sorted by that musical quality.</li>
+<li>Toggle the sort on the song list. </li>
+<li>Watch the words representing lyric groupings change size as you select different time periods. The size indicates the relative number of words in that category per song for the period. </li>
+<li>Click a lyric category to see the word stems (individual words) and their counts for that period.</li>
+<li>Click an individual word stem to see the songs that have that word stem. </li>
+</ul>
+
+
+<h3>Data</h3>
+
+<p>We show US economic indicators together with the music that made the charts during the period 1958-2012, visualizing musical qualities and lyrics</p>
+<h4>Economic Trends</h4>
+<p>Data source: Federal Reserve Bank of St. Louis (<a href="http://research.stlouisfed.org/fred2">http://research.stlouisfed.org/fred2</a>), 1958-2012.</p>
+<p>
+<ul>
+<li>Civilian Unemployment Rate, Percent, Monthly, Seasonally Adjusted </li>
+<li>S&amp;P 500 Stock Price Index, Percent Change from Year Ago, Monthly, Not Seasonally Adjusted </li></ul></p>
+
+<h4>Music Chart Data</h4>
+<p>The Whitburn Project is maintained by a group of music enthusiasts whose goal is to document chart data on popular music starting in the 1890s. The data details all music that reached the top 100 (not only restricted to Billboard). </p>
+<p>More information: <a href="http://waxy.org/2008/05/the_whitburn_project">http://waxy.org/2008/05/the_whitburn_project</a></p>
+
+<h4>Music Qualities</h4>
+
+<p>We began our data gathering with the “Million Song Database,” a dataset curated by The Echo Nest, a company born out of the MIT Media Lab in a project to catalog musical attributes. Echo Nest is now used to help drive recommendation engines behind popular online music applications like Rdio and Spotify, the latter of which recently announced the acquisition of The Echo Nest. Echo Nest provides a very robust API for developers to call and retrieve their catalogued attributes.</p>
+
+<p>Data source: <a href="http://developer.echonest.com/acoustic-attributes.html">http://developer.echonest.com/acoustic-attributes.html</a></p>
+
+<p>More information: <a href="http://echonest.com">http://echonest.com</a></p>
+
+<h4>Lyrics</h4>
+<p>For the lyrics data, we began with a dataset that was created by a collaboration between Echo Nest and MusicXMatch. The dataset doesn’t contain full lyrics, due to the numerous copyright issues involved. Instead, it offers word counts (using word stemming) for each song in a “word bag” form. In all, there are some 237K songs for which there are word bags in this dataset. </p>
+
+<p>Data source: <a href="http://labrosa.ee.columbia.edu/millionsong/musixmatch">http://labrosa.ee.columbia.edu/millionsong/musixmatch</a></p>
+
+<h3>Libraries/Citations</h3>
+<p>
+  <ul>
+    <li>jquery-1.10.1.js</li>
+    <li>d3.v3.min.js</li>
+    <li>Menus built with CSS Menu Maker (<a href="http://cssmenumaker.com/builder/1827398">http://cssmenumaker.com/builder/1827398</a>)</li>
+    <li>Focus+Context via Brushing (<a href="http://bl.ocks.org/mbostock/1667367">http://bl.ocks.org/mbostock/1667367</a>)</li>
+
+
+      </section>
+      <footer>
+      </footer>
+	</div>
+    <script src="js/scale.fix.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create TrackMap for Viz</title>
+
+    <script src="./libs/d3.v3.min.js"></script>
+    <script src="./libs/FileSaver.js"></script>
+
+
+</head>
+<body>
+
+<script type="text/javascript">
+
+// ---------------------------------
+/*
+Creates the output file that's used in the viz ("trackMap.json"). 
+*/
+// ------------------------------------------------------------------------------------
+var MXM_DATASET = "mxmReduced.json";        // main word/count file
+ /*
+  Each row looks like this:
+    0: "TRAAAAV128F421A322"
+    1: "4623710"
+    2: "1:6"
+    3: "2:4"
+    where first item in colon-separated string is a key, second is count
+    the key points to the word stem in the mxm file
+  */
+// How we're grouping words; created by   
+var LYRICGROUPS = "lyricsReference.json";       // how we're grouping words
+// --------------------------------------------------------------------------------------
+
+var trackMap = d3.map();
+
+main();
+
+
+function main() {
+
+  var mxmData;
+  
+  d3.json("./data/" + MXM_DATASET, function(data1) {
+
+    mxmData = data1;
+
+    d3.json("./data/" + LYRICGROUPS, function(data2) {
+
+      lyricGroups = d3.map(data2);
+
+      // loop through each group and get counts/words for each track
+      processTracks(mxmData, lyricGroups);
+
+      saveToFile(trackMap, "trackMap.json");
+
+
+      });
+  });
+}
+
+function processTracks(mxm, groups) {
+
+var stemId, stemCount, trackId, splitStr;
+
+  mxm.forEach(function(track) {
+      // loop through each element in track
+      track.forEach(function(element, i) {
+          if (i == 0) {
+            trackId = element; // first element is MSD track ID
+          }
+          if (i > 1) { // skip the keys (0, 1)
+            // process the stem/count pair
+            splitStr = element.split(":"); 
+            stemId = splitStr[0];
+            stemCount = splitStr[1];
+            // check groups
+            countGroup(trackId, stemId, stemCount, groups);
+
+          }
+      }); 
+  });
+
+}
+
+  function countGroup(trackId, stemId, stemCount, groups) {
+
+    groups.forEach(function(key, stemArray) {
+      stemArray.forEach(function(d){
+        //d.id, d.stem
+        if (d.id == stemId) {
+          updateTrackMap(trackId, stemId, stemCount, key, d.stem)
+        }
+      });
+    });
+  }
+
+
+function updateTrackMap(trackId, stemId, stemCount, group, stem) {
+  var values = [];
+  var hasGroup = false;
+  // create if doesn't exist in map
+  if (!trackMap.has(trackId)) {
+    trackMap.set(trackId, values); 
+  }
+  // get values
+  values = trackMap.get(trackId);
+  // might be empty, partially filled, etc.
+  // var vMap = d3.map(values);
+  values.forEach(function(v) {
+    if (v[0].grp != undefined && v[0].grp == group) {
+      hasGroup = true;
+    }
+  });
+
+  var gValues = [];
+  if (!hasGroup) {
+    // initialize the group
+    gValues.push({"grp": group, "sum": +stemCount, "stems": [{"stem": stem, "cnt": +stemCount}]});
+    values.push(gValues);
+  }
+  else {
+    // group exists -- update it
+    values.forEach(function(v) {
+      if (v[0].grp != undefined && v[0].grp == group) {
+        v[0].sum = v[0].sum + (+stemCount);
+        v[0].stems.push({"stem": stem, "cnt": +stemCount});
+      }
+    });
+  }
+  // set the trackMap with all this crap
+  trackMap.set(trackId, values);
+
+}
+
+
+
+// ===============================================
+  var saveToFile = function(object, filename){
+
+      var blob, blobText;
+      blobText = [JSON.stringify(object, '\t')];
+      blob = new Blob(blobText, {
+          type: "text/plain;charset=utf-8"
+      });
+      saveAs(blob, filename);
+      // printTotals(object, filename);
+  }
+
+
+</script>
+</body>
+</html>
